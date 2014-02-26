@@ -2,13 +2,13 @@
 var counter = 0;
 var mode;
 var result = [];
-var totalResult = 0;
 var level = -1;
 var digit = [
   0, 1, 2, 3, 4, 5, 6, 7, 8, 9
 ];
 
 function cal(string) {
+  var totalResult = 0;
   for (var i = 0; i < string.length; i++) {
     if (string[i] === '(') {
       level++;
@@ -36,7 +36,7 @@ function cal(string) {
     totalResult += result[j];
   }
   console.log(totalResult);
-  totalResult = 0;
 }
+
 cal('(+98)');
 cal('(+8(-93))');
