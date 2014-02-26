@@ -1,0 +1,59 @@
+<script src="js/sugar.js"></script>
+<script src="js/peg.js"></script>
+<script src="js/plt.js"></script>
+
+<title>Addition</title>
+
+<!--
+
+Full documentation: http://pegjs.majda.cz/documentation#grammar-syntax-and-semantics-parsing-expression-types
+
+'x'   : match the literal character 'x'
+x+    : match x 1 or more times
+x*    : match x 0 or more times
+x?    : match x 0 or 1 times
+!x    : match anything but the match x
+x/y   : match x or y, trying in that order
+[xyz] : match one of the literal character 'x', 'y', or 'z'
+v:x   : assign the result of the match x to the variable v
+
+-->
+
+<grammar>
+  <!--start       = '(' '+' ' '* a:number ' ' b:number ')' { return a + b }-->
+  <!--start       = '(' c:operator ' '* a:number ' ' b:combo ')' { return a c b }
+  combo       = basis/number
+  basis       = '(' c:operator ' '* a:number ' ' b:number ')' { return a c b }
+  operator    = plus/minus
+  plus        = '+'
+  minus       = '-'-->
+
+  <!--start       = plus_/minus_
+  minus_      = '(' '-' ' '* a:combo ' ' b:combo ')' { return a - b }
+  plus_       = '(' '+' ' '* a:combo ' ' b:combo ')' { return a + b }
+  combo       = plus/minus/number
+  plus        = '(' '+' ' '* a:number ' ' b:number ')' { return a + b }
+  minus       = '(' '-' ' '* a:number ' ' b:number ')' { return a - b }-->
+
+  start       = combo
+  minus_      = '(' '-' ' '* a:combo ' ' b:combo ')' { return a - b }
+  plus_       = '(' '+' ' '* a:combo ' ' b:combo ')' { return a + b }
+  combo       = plus_/minus_/number
+
+  number      = d:digit+ { return parseInt( d.join('') ) }
+  digit       = [0123456789]
+</grammar>
+
+<h3>From Class</h3>
+<code>(+7 13)</code>
+<code>(+ 7 13)</code>
+
+<h3>Homework: Make this work</h3>
+<code>(+ 7 (+ 30 5))</code>
+
+<h3>Extra: How do you do alternate operators?</h3>
+<code>(- 100 (+ 29 29))</code>
+
+<h3>Extra: How do you do multiple inputs?</h3>
+<code>(+ 1 2 3 4 5 7 20)</code>
+<code>(+ 10 (- 50 45) 10 (+ 3 7) 10)</code>
