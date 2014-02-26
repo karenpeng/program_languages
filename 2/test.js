@@ -1,4 +1,4 @@
-var string = '(+98)';
+//var string = '(+98)';
 var counter = 0;
 var mode;
 var result = [];
@@ -36,5 +36,7 @@ function cal(string) {
     totalResult += result[j];
   }
   console.log(totalResult);
+  totalResult = 0;
 }
-cal(string);
+cal('(+98)');
+cal('(+8(-93))');
