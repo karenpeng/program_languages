@@ -36,7 +36,7 @@ v:x   : assign the result of the match x to the variable v
   format                        = enter / space
 
   comparison                    = '(' space co:compare space a:expression+ ')' { return eval(a.join(co))}
-  combo                         = '(' space 'if' format a:comparison format b:expression format c:expression format ')' { return a? b : c}
+  combo                         = '(' space 'if' format a:comparison format b:expression format c:expression space ')' { return a? b : c}
 
   compare                       = notEqual / equal
   equal                         = '=' { return '==='}
