@@ -20,7 +20,7 @@ v:x   : assign the result of the match x to the variable v
 -->
 
 <grammar>
-  start                         = operation / comparison / test
+  start                         = operation / comparison / combo
 
   operation                     = '(' space op:operator space args:expression+ ')' space { return eval(args.join(op)) }
   operator                      = '+' / '-' / '/' / '*'
@@ -33,11 +33,10 @@ v:x   : assign the result of the match x to the variable v
   space                         = [ ]* / !. { return undefined }
   mandatory_space               = [ ]+ / !. { return undefined }
   enter                         = '\n'*
-  format                        = space / enter
-
+  format                        = enter / space
 
   comparison                    = '(' space co:compare space a:expression+ ')' { return a.join(co)? true: false }
-  test                          = '(' space 'if' format a:comparison format b:expression format c:expression format ')' { return a? true: false}
+  combo                         = '(' space 'if' format a:comparison format b:expression format c:expression format ')' { return a? true: false}
 
   compare                       = '>' / '<' / '='
 
