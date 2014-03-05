@@ -32,13 +32,15 @@ v:x   : assign the result of the match x to the variable v
 
   space                         = [ ]* / !. { return undefined }
   mandatory_space               = [ ]+ / !. { return undefined }
-  enter                         = '\n'*
+  enter                         = '\n'+
   format                        = enter / space
 
-  comparison                    = '(' space co:compare space a:expression+ ')' { return a.join(co)? true: false }
-  combo                         = '(' space 'if' format a:comparison format b:expression format c:expression format ')' { return a? true: false}
+  comparison                    = '(' space co:compare space a:expression+ ')' { return eval(a.join(co))}
+  combo                         = '(' space 'if' format a:comparison format b:expression format c:expression format ')' { return a? b : c}
 
-  compare                       = '>' / '<' / '='
+  compare                       = notEqual / equal
+  equal                         = '=' { return '==='}
+  notEqual                      ='>' / '<'
 
 </grammar>
 
