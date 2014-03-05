@@ -21,24 +21,32 @@ v:x   : assign the result of the match x to the variable v
 
 <grammar>
   <!--start       = '(' '+' ' '* a:number ' ' b:number ')' { return a + b }-->
-  <!--start       = '(' c:operator ' '* a:number ' ' b:combo ')' { return a c b }
+
+  start       = '(' c:operator ' '* a:number ' ' b:combo ')' { return a c b }
   combo       = basis/number
   basis       = '(' c:operator ' '* a:number ' ' b:number ')' { return a c b }
   operator    = plus/minus
   plus        = '+'
-  minus       = '-'-->
+  minus       = '-'
 
-  <!--start       = plus_/minus_
+
+  <!--
+  start       = plus_/minus_
   minus_      = '(' '-' ' '* a:combo ' ' b:combo ')' { return a - b }
   plus_       = '(' '+' ' '* a:combo ' ' b:combo ')' { return a + b }
   combo       = plus/minus/number
-  plus        = '(' '+' ' '* a:number ' ' b:number ')' { return a + b }
-  minus       = '(' '-' ' '* a:number ' ' b:number ')' { return a - b }-->
+  plus        = '(' '+' ' '* a:[number ' ']* ' ' b:number ')' { return a + b }
+  minus       = '(' '-' ' '* a:number ' ' b:number ')' { return a - b }
+  -->
 
+<!--
   start       = combo
   minus_      = '(' '-' ' '* a:combo ' ' b:combo ')' { return a - b }
   plus_       = '(' '+' ' '* a:combo ' ' b:combo ')' { return a + b }
   combo       = plus_/minus_/number
+-->
+
+
 
   number      = d:digit+ { return parseInt( d.join('') ) }
   digit       = [0123456789]
